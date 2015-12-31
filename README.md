@@ -172,6 +172,21 @@ Then
 chown postgres:postgres recovery:conf
 ```
 
+```
+cd /var/lib/pgsql/9.4/data/
+vim postgresql.conf
+```
+Edit:
+```
+hot_standby=on
+```
+```
+su - postgres
+/usr/pgsql-9.4/bon/pg_ctl -D /var/lib/pgsql/9.4/data/ start
+```
+- Discussion - Database Clustering
+
+
 
 
 
