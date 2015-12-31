@@ -28,3 +28,43 @@ systemctl start postgresql-9.4.service
 \password postgres
 CREATE EXTENSION adminpack;
 ```
+- Creating Databases
+```
+bash > createdb testdb
+psql > \connect testdb
+```
+Traditional way:
+```
+psql > CREATE DATABASE testdb2;
+show all
+DROP DATABASE testdb
+or:
+bash > dropdb testdb
+```
+- Creating Tables
+```
+```
+- Roles - Creating and Deleting Users
+```
+bash > createuser testuser
+ALTER USER tesetuser WITH PASSWORD 'pass'
+psql -U testuser
+cd /var/lib/pgsql/9.4/data/
+vi pg_hba.conf
+```
+change:
+```
+# "local" is for Unix domain socket connections only
+local   all             all                                     password
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            password
+```
+Then
+```
+systemctl restart postgresql-9.4
+```
+delete user:
+```
+dropdb
+dropuser testuser
+```
