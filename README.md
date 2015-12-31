@@ -68,3 +68,26 @@ delete user:
 dropdb
 dropuser testuser
 ```
+- Roles - Assigning Permissions
+```
+GRANT ALL on tbname TO username;
+```
+- Installing and Configuring myPgAdmin
+```
+yum install phpPgAdmin httpd
+cd /etc/httpd/conf.d
+vim phpPgAdmin.conf
+```
+Edit:
+```
+#Require local
+Require all granted
+
+Allow from all
+```
+Then
+```
+systemctl enable httpd
+systemctl start httpd
+```
+
