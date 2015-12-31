@@ -110,3 +110,68 @@ Start by lynx:
 lynx http://localhost/phpPgAdmin
 ifconfig
 ```
+- Accepting External Connections
+```
+cd /var/lib/pgsql/9.4/data/
+vim postgresql.conf
+```
+edit:
+```
+listen_addresses='*'
+port=5432
+```
+Then
+```
+cd /etc/httpd/conf.d
+```
+
+- Inserting, Viewing and Deleting Data
+- Backing Up and Restoring Databases
+```
+bash > pg_dump >x.txt
+```
+Restore:
+```
+psql dbname < x.txt
+```
+- Replication - Master Server Configuration
+```
+cd /var/lib/pgsql/9.4/data/
+vim postgresql.conf
+```
+edit
+```
+wal_level = hot_standby
+max_wal_senders = 1 (no of slaves)
+max_keep_segmants = 100
+synchronous_standby_names = 'p2'
+```
+Then create a user for replication(replication is a rule name)
+```
+create user replica replication
+```
+And edit pg_hba.conf, add a line
+```
+host replication replica <target slave ip> trust
+```
+
+- Replication - Slave Server Configuration
+(in slave machine,)
+```
+pg_basebackup -D /var/lib/pgsql.9.4/data -h masterip(x.x.x.x) -U replica
+vi revovery.conf
+```
+edit:
+```
+stand_by=on
+trigger_file='/tmp/promotedb'
+primary_conninfo='host=<hostip> port=5432 user=replica application_name=<hostname>'
+```
+Then
+```
+chown postgres:postgres recovery:conf
+```
+
+
+
+
