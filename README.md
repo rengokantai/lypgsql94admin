@@ -90,4 +90,23 @@ Then
 systemctl enable httpd
 systemctl start httpd
 ```
-
+```
+cd /etc/phpPgAdmin
+vim config.inc.php
+```
+Edit
+```
+  $conf['servers'][0]['host'] = 'localhost';
+  $conf['extra_login_security'] = false;
+$conf['owned_only'] = true;
+```
+And restart:
+```
+systemctl restart httpd
+systemctl restart postgresql-9.4
+```
+Start by lynx:
+```
+lynx http://localhost/phpPgAdmin
+ifconfig
+```
